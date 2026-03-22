@@ -1,0 +1,46 @@
+# ================================================================
+#  Expense Tracker — .gitignore
+#  Author : Aditya Bobade
+# ================================================================
+
+
+# ── DATABASE ──
+# SQLite database is auto-created on first run — no need to push
+expenses.db
+
+
+# ── PYTHON CACHE ──
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+
+# ── VIRTUAL ENVIRONMENT ──
+venv/
+env/
+.env/
+.venv/
+
+
+# ── ENVIRONMENT VARIABLES ──
+.env
+*.env
+
+
+# ── IDE & EDITOR ──
+.vscode/
+.idea/
+*.suo
+*.user
+
+
+# ── OS FILES ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ── FLASK ──
+instance/
+*.log

@@ -1,0 +1,351 @@
+/* ================================================================
+   Expense Tracker — Stylesheet
+   Author : Aditya Bobade
+================================================================ */
+
+
+/* ── RESET & BASE ── */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+
+/* ── CONTAINER ── */
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 30px 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ── PAGE TITLE ── */
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #e8f5e9;
+    padding-bottom: 12px;
+}
+
+
+/* ── SECTION TITLES ── */
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 14px;
+}
+
+
+/* ── FORM SECTION ── */
+
+.form-section {
+    background: #f9fbe7;
+    border: 1px solid #dcedc8;
+    border-radius: 10px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+}
+
+.expense-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: flex-end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1 1 160px;
+}
+
+.form-group label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.form-group input,
+.form-group select {
+    padding: 9px 12px;
+    border: 1.5px solid #c8e6c9;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    background: #fff;
+    color: #333;
+    transition: border-color 0.2s;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #43a047;
+    box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.12);
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+
+/* ── BUTTONS ── */
+
+.btn {
+    padding: 9px 18px;
+    border: none;
+    border-radius: 7px;
+    font-size: 0.93rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-add {
+    background: #43a047;
+    color: #fff;
+}
+
+.btn-edit {
+    background: #1976d2;
+    color: #fff;
+    font-size: 0.82rem;
+    padding: 6px 12px;
+}
+
+.btn-delete {
+    background: #e53935;
+    color: #fff;
+    font-size: 0.82rem;
+    padding: 6px 12px;
+}
+
+.btn-cancel {
+    background: #757575;
+    color: #fff;
+}
+
+
+/* ── TOTAL CARD ── */
+
+.total-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e8f5e9;
+    border: 1px solid #c8e6c9;
+    border-radius: 10px;
+    padding: 14px 22px;
+    margin-bottom: 25px;
+}
+
+.total-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.total-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2e7d32;
+}
+
+
+/* ── TABLE SECTION ── */
+
+.table-section {
+    margin-bottom: 30px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+}
+
+thead tr {
+    background: #43a047;
+    color: #fff;
+}
+
+thead th {
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background: #f1f8e9;
+}
+
+tbody td {
+    padding: 11px 14px;
+    vertical-align: middle;
+}
+
+.amount-cell {
+    font-weight: 600;
+    color: #c62828;
+}
+
+.action-cell {
+    white-space: nowrap;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+
+/* ── CATEGORY BADGES ── */
+
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.badge-food     { background: #fff3e0; color: #e65100; }
+.badge-travel   { background: #e3f2fd; color: #1565c0; }
+.badge-shopping { background: #fce4ec; color: #880e4f; }
+.badge-bills    { background: #f3e5f5; color: #6a1b9a; }
+.badge-other    { background: #eceff1; color: #37474f; }
+
+
+/* ── EMPTY STATE ── */
+
+.empty-msg {
+    text-align: center;
+    color: #999;
+    padding: 30px;
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+
+/* ── CHART SECTION ── */
+
+.chart-section {
+    margin-top: 10px;
+}
+
+.chart-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.chart-controls label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.chart-select {
+    padding: 7px 12px;
+    border: 1.5px solid #c8e6c9;
+    border-radius: 7px;
+    font-size: 0.92rem;
+    background: #fff;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+}
+
+.chart-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+
+/* ── RESPONSIVE ── */
+
+@media (max-width: 640px) {
+    .container {
+        padding: 20px 18px;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .expense-form {
+        flex-direction: column;
+    }
+
+    .form-group {
+        flex: 1 1 100%;
+    }
+
+    .total-card {
+        flex-direction: column;
+        gap: 6px;
+        text-align: center;
+    }
+
+    thead th:first-child {
+        display: none;
+    }
+
+    tbody td:first-child {
+        display: none;
+    }
+}

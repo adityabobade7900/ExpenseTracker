@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- ── HEADER ── -->
+        <h1 class="page-title">💰 Expense Tracker</h1>
+
+        <!-- ── ADD EXPENSE FORM ── -->
+        <section class="form-section">
+            <h2 class="section-title">Add New Expense</h2>
+            <form action="/add" method="post" class="expense-form">
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        placeholder="e.g. Lunch at cafe"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="" disabled selected>Select category</option>
+                        <option value="Food">Food</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Amount (₹)</label>
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        placeholder="0.00"
+                        step="0.01"
+                        min="0.01"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input
+                        type="date"
+                        id="date"
+                        name="date"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-add">+ Add Expense</button>
+
+            </form>
+        </section>
+
+        <!-- ── TOTAL SUMMARY ── -->
+        <div class="total-card">
+            <span class="total-label">Total Expenses</span>
+            <span class="total-amount">₹ {{ "%.2f" | format(total) }}</span>
+        </div>
+
+        <!-- ── EXPENSES TABLE ── -->
+        <section class="table-section">
+            <h2 class="section-title">All Expenses</h2>
+
+            {% if expenses %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for e in expenses %}
+                        <tr>
+                            <td>{{ e.id }}</td>
+                            <td>{{ e.description }}</td>
+                            <td>
+                                <span class="badge badge-{{ e.category | lower }}">
+                                    {{ e.category }}
+                                </span>
+                            </td>
+                            <td class="amount-cell">₹ {{ "%.2f" | format(e.amount) }}</td>
+                            <td>{{ e.date }}</td>
+                            <td class="action-cell">
+
+                                <!-- EDIT button — links to edit page -->
+                                <a href="/edit/{{ e.id }}" class="btn btn-edit">Edit</a>
+
+                                <!-- DELETE — uses POST form for safety (not GET) -->
+                                <form
+                                    action="/delete/{{ e.id }}"
+                                    method="post"
+                                    style="display:inline"
+                                    onsubmit="return confirm('Delete this expense?')"
+                                >
+                                    <button type="submit" class="btn btn-delete">Delete</button>
+                                </form>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="empty-msg">No expenses recorded yet. Add your first one above!</p>
+            {% endif %}
+
+        </section>
+
+        <!-- ── CHART ── -->
+        <section class="chart-section">
+            <h2 class="section-title">📊 Expense Breakdown</h2>
+
+            <div class="chart-controls">
+                <label for="chartType">Chart Type:</label>
+                <select id="chartType" class="chart-select">
+                    <option value="bar">Bar</option>
+                    <option value="pie">Pie</option>
+                    <option value="doughnut">Doughnut</option>
+                    <option value="polarArea">Polar Area</option>
+                    <option value="line">Line</option>
+                </select>
+            </div>
+
+            <div class="chart-wrapper">
+                <canvas id="expenseChart"></canvas>
+            </div>
+        </section>
+
+    </div><!-- /.container -->
+
+    <!-- ── CHART SCRIPT ── -->
+    <script>
+        let chart;
+
+        async function loadChart(type = "bar") {
+            const res  = await fetch("/chart-data");
+            const data = await res.json();
+
+            // Destroy previous chart instance before creating a new one
+            if (chart) chart.destroy();
+
+            chart = new Chart(document.getElementById("expenseChart"), {
+                type: type,
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: "Amount (₹)",
+                        data: data.values,
+                        backgroundColor: [
+                            "#ff6384", "#36a2eb", "#ffce56", "#4bc0c0", "#9966ff"
+                        ],
+                        borderColor: "#fff",
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: "bottom" },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => ` ₹ ${ctx.parsed.toFixed(2)}`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load chart on page ready
+        loadChart();
+
+        // Reload chart when type changes
+        document.getElementById("chartType").addEventListener("change", e => {
+            loadChart(e.target.value);
+        });
+    </script>
+
+</body>
+</html>
