@@ -12,6 +12,7 @@ app = Flask(__name__)
 # DATABASE CONNECTION
 # ----------------------------------------------------------------
 
+
 def get_db_connection():
     """Open and return a SQLite connection with Row factory enabled."""
     conn = sqlite3.connect("expenses.db")
@@ -71,9 +72,9 @@ def index():
 def add_expense():
     """Insert a new expense record into the database."""
     description = request.form["description"].strip()
-    category    = request.form["category"].strip()
-    amount      = request.form["amount"].strip()
-    date        = request.form["date"].strip()
+    category = request.form["category"].strip()
+    amount = request.form["amount"].strip()
+    date = request.form["date"].strip()
 
     # Basic server-side validation
     if not description or not category or not amount or not date:
@@ -99,7 +100,6 @@ def add_expense():
 
 # ----------------------------------------------------------------
 # EDIT PAGE  —  GET /edit/<id>
-# FIX: this route was missing — edit.html had no page to load it
 # ----------------------------------------------------------------
 
 @app.route("/edit/<int:id>")
@@ -119,16 +119,15 @@ def edit_expense(id):
 
 # ----------------------------------------------------------------
 # UPDATE EXPENSE  —  POST /update/<id>
-# FIX: this route was completely missing from the original app
 # ----------------------------------------------------------------
 
 @app.route("/update/<int:id>", methods=["POST"])
 def update_expense(id):
     """Update an existing expense record."""
     description = request.form["description"].strip()
-    category    = request.form["category"].strip()
-    amount      = request.form["amount"].strip()
-    date        = request.form["date"].strip()
+    category = request.form["category"].strip()
+    amount = request.form["amount"].strip()
+    date = request.form["date"].strip()
 
     try:
         amount = float(amount)
@@ -152,7 +151,6 @@ def update_expense(id):
 
 # ----------------------------------------------------------------
 # DELETE EXPENSE  —  POST /delete/<id>
-# FIX: changed from GET to POST — deleting via GET is unsafe
 # ----------------------------------------------------------------
 
 @app.route("/delete/<int:id>", methods=["POST"])
@@ -182,7 +180,7 @@ def chart_data():
     conn.close()
 
     labels = [row["category"] for row in rows]
-    values = [row["total"]    for row in rows]
+    values = [row["total"] for row in rows]
 
     return jsonify({"labels": labels, "values": values})
 

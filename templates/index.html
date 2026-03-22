@@ -23,13 +23,7 @@
 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input
-                        type="text"
-                        id="description"
-                        name="description"
-                        placeholder="e.g. Lunch at cafe"
-                        required
-                    >
+                    <input type="text" id="description" name="description" placeholder="e.g. Lunch at cafe" required>
                 </div>
 
                 <div class="form-group">
@@ -46,25 +40,12 @@
 
                 <div class="form-group">
                     <label for="amount">Amount (₹)</label>
-                    <input
-                        type="number"
-                        id="amount"
-                        name="amount"
-                        placeholder="0.00"
-                        step="0.01"
-                        min="0.01"
-                        required
-                    >
+                    <input type="number" id="amount" name="amount" placeholder="0.00" step="0.01" min="0.01" required>
                 </div>
 
                 <div class="form-group">
                     <label for="date">Date</label>
-                    <input
-                        type="date"
-                        id="date"
-                        name="date"
-                        required
-                    >
+                    <input type="date" id="date" name="date" required>
                 </div>
 
                 <button type="submit" class="btn btn-add">+ Add Expense</button>
@@ -113,12 +94,8 @@
                                 <a href="/edit/{{ e.id }}" class="btn btn-edit">Edit</a>
 
                                 <!-- DELETE — uses POST form for safety (not GET) -->
-                                <form
-                                    action="/delete/{{ e.id }}"
-                                    method="post"
-                                    style="display:inline"
-                                    onsubmit="return confirm('Delete this expense?')"
-                                >
+                                <form action="/delete/{{ e.id }}" method="post" style="display:inline"
+                                    onsubmit="return confirm('Delete this expense?')">
                                     <button type="submit" class="btn btn-delete">Delete</button>
                                 </form>
 
@@ -161,10 +138,9 @@
         let chart;
 
         async function loadChart(type = "bar") {
-            const res  = await fetch("/chart-data");
+            const res = await fetch("/chart-data");
             const data = await res.json();
 
-            // Destroy previous chart instance before creating a new one
             if (chart) chart.destroy();
 
             chart = new Chart(document.getElementById("expenseChart"), {
@@ -205,4 +181,5 @@
     </script>
 
 </body>
+
 </html>

@@ -125,7 +125,7 @@ cd ExpenseTracker
 **Option B — Download ZIP:**
 Download and extract the ZIP from GitHub, then navigate into the folder:
 ```powershell
-cd "C:\Users\bobad\Downloads\ExpenseTracker"
+cd "C:\Users\...."
 ```
 
 ---
@@ -303,3 +303,5 @@ You may use, modify, and share this project for learning or personal research.
 Commercial use, selling, or redistribution for profit is strictly NOT permitted.
 All rights reserved.
 ```
+
+Made with ❤️ and ☕
